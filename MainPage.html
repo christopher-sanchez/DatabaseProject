@@ -1,29 +1,6 @@
 <html>
-    <style>
-      .btn {
-         position: absolute;
-         right: 0;
-         display: flex;
-         flex-direction: column;
-         padding-top: 200px;
-         gap: 20px;
-         width: 250px;
-      }
-
-      .btn input {
-         width: 100%; 
-         height: 80px; 
-         font-size: 18px; 
-         border-radius: 12px;
-      }
-      .coins input {
-        width: 250px;
-         height: 80px; 
-         font-size: 18px; 
-         border-radius: 12px;
-         background-color: gold;
-      }
-    </style>
+    <link rel="stylesheet" href="mainPage-style.css">
+    <script src="mainPage-JS.js"></script>
    <body>
      <div class="btn">
        <input type="button" value="INSURANCE">
@@ -34,6 +11,39 @@
      </div>
      <div class="coins">
      <input type="button" value="Get More Coins!" >
+    </div>
+      <p style="font-size: larger;font-family: 'Times New Roman', Times, serif;padding-left: 5%;" >Coins: 100000</p>
+
+    <div class="counter">
+        <div class="counter-label">
+            <p>Current bet:</p>
+        </div>
+        <input type="number"  id="Coins" name="quantity" value="1" min="1" max="100">
+     
+        <div class="counter-buttons">
+            <button onmousedown="startDecreasing()" onmouseup="stopChanging()" onmouseleave="stopChanging()">-</button>
+         <button onmousedown="startIncreasing()" onmouseup="stopChanging()" onmouseleave="stopChanging()">+</button>
+          </div>
+      </div>
+      <div class="leaderBorad table">
+        <div class="leaderBorad-label">
+            <p>Leaderborad</p>
+        </div>
+      <table >
+        <tr>
+            <th>Name</th>
+        <th>Coins</th>
+        </tr>
+        <tr>
+        <td>John Doe</td>
+        <td>30</td>
+            
+        </tr>
+        <tr>
+        <td>Jane Doe</td>
+        <td>20</td>
+    </tr>
+        </table>
     </div>
    </body>
 </html>
