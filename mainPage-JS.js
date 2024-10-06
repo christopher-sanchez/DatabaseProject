@@ -1,11 +1,5 @@
 
-        const canvas = document.getElementById("myCanvas");
-        const ctx = canvas.getContext("2d");
-        
-        ctx.font = "50px Arial";
-        ctx.fillText("Hello World",10,80);
      
-
 let intervalId;
 function increaseQuantity() {
 var quantityInput = document.getElementById('Coins');
