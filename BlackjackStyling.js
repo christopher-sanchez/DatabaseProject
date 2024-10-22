@@ -13,6 +13,9 @@ let isGameOver = false;
 // Coins and Betting Data
 let playerCoins = 1000; // Starting coins
 let currentBet = 100; // Default minimum bet
+let increasedBet = 0;
+let decreasedBet = 0;
+let confirmingBet = 0;
 
 // Current user
 let currentUser = null;
@@ -41,6 +44,7 @@ const coinsAmountEl = document.getElementById("coins-amount");
 const betAmountEl = document.getElementById("bet-amount");
 const decreaseBetButton = document.getElementById("decrease-bet-button");
 const increaseBetButton = document.getElementById("increase-bet-button");
+const confirmBetButton = document.getElementById("confirm-bet-button");
 
 // Leaderboard Elements
 const leaderboardButton = document.getElementById("leaderboard-button");
@@ -51,6 +55,7 @@ const closeLeaderboardButton = document.getElementById("close-leaderboard-button
 // Event listeners for betting
 decreaseBetButton.addEventListener("click", decreaseBet);
 increaseBetButton.addEventListener("click", increaseBet);
+confirmBetButton.addEventListener("click", confirmBet);
 leaderboardButton.addEventListener("click", showLeaderboard);
 closeLeaderboardButton.addEventListener("click", () => leaderboardPopup.style.display = "none");
 
@@ -148,6 +153,16 @@ function increaseBet() {
     }
 }
 
+function confirmBet() {
+    increaseBetButton.classList.add("hidden");
+    decreaseBetButton.classList.add("hidden");
+    confirmBetButton.classList.add("hidden");
+    updateScores();
+    renderCards();
+    confirmingBet = 1;
+    alert("Your bet has been made!");
+}
+
 // Blackjack logic
 function startGame() {
     deck = createDeck();
@@ -155,9 +170,6 @@ function startGame() {
 
     dealerHand = [drawCard(), drawCard()];
     playerHand = [drawCard(), drawCard()];
-
-    updateScores();
-    renderCards();
 }
 
 function createDeck() {
@@ -184,31 +196,39 @@ function drawCard() {
 function hit() {
     if (isGameOver) return;
 
-    playerHand.push(drawCard());
-    updateScores();
-    renderCards();
+    if (confirmingBet === 1) {
+        playerHand.push(drawCard());
+        updateScores();
+        renderCards();
 
-    if (playerScore > 21) {
-        endGame("You busted!", false);
+        if (playerScore > 21) {
+            endGame("You busted!", false);
+        }
+    } else {
+        alert("Confirm your bet first!");
     }
 }
 
 function stand() {
     if (isGameOver) return;
 
-    while (dealerScore < 17) {
-        dealerHand.push(drawCard());
-        updateScores();
-    }
+    if (confirmingBet === 1) {
+        while (dealerScore < 17) {
+            dealerHand.push(drawCard());
+            updateScores();
+        }
 
-    if (dealerScore > 21) {
-        endGame("Dealer busted, you win!", true);
-    } else if (playerScore > dealerScore) {
-        endGame("You win!", true);
-    } else if (playerScore < dealerScore) {
-        endGame("Dealer wins!", false);
+        if (dealerScore > 21) {
+            endGame("Dealer busted, you win!", true);
+        } else if (playerScore > dealerScore) {
+            endGame("You win!", true);
+        } else if (playerScore < dealerScore) {
+            endGame("Dealer wins!", false);
+        } else {
+            endGame("It's a tie!", null);
+        }
     } else {
-        endGame("It's a tie!", null);
+        alert("CONFIRM! BET!");
     }
 }
 
@@ -283,11 +303,15 @@ function restartGame() {
     standButton.disabled = false;
     resultMessageEl.innerText = '';
     restartButton.classList.add("hidden");
+    increaseBetButton.classList.remove("hidden");
+    decreaseBetButton.classList.remove("hidden");
+    confirmBetButton.classList.remove("hidden");
 
     dealerHand = [];
     playerHand = [];
     playerScore = 0;
     dealerScore = 0;
+    confirmingBet = 0;
 
     startGame();
 }
