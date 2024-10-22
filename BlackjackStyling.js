@@ -64,7 +64,11 @@ restartButton.addEventListener("click", restartGame);
 
 function signUp() {
     const username = signupUsername.value.trim();
-    if (username) {
+    if (localStorage.getItem("username") === username) {
+        alert("If you are logging in, please use same username again.");
+        switchToLogin();
+    }
+    else if (username) {
         localStorage.setItem("username", username);
         localStorage.setItem(`${username}-coins`, 1000); // Set initial coins to 1000 for new user
         alert(`Welcome, ${username}! You have signed up successfully.`);
