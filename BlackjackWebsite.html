@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+        }
+        #game-area, #login-area {
+            margin-top: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        .cards {
+            display: inline-block;
+            margin: 10px;
+        }
+        /* Popup Styles */
+        #leaderboard-popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            color: black;
+            border: 2px solid #28a745;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Blackjack Game with Betting and Leaderboard</h1>
+
+    <!-- Sign-Up and Login Area -->
+    <div id="login-area">
+        <div id="sign-up-section">
+            <h2>Sign Up</h2>
+            <input type="text" id="signup-username" placeholder="Enter username">
+            <button id="signup-button">Sign Up</button>
+        </div>
+
+        <div id="login-section" class="hidden">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Enter username">
+            <button id="login-button">Login</button>
+        </div>
+
+        <div id="welcome-section" class="hidden">
+            <h2 id="welcome-message"></h2>
+            <button id="logout-button">Logout</button>
+        </div>
+    </div>
+
+    <!-- Game Area (Initially Hidden) -->
+    <div id="game-area" class="hidden">
+        <div>
+            <h2>Dealer's Hand:</h2>
+            <div id="dealer-cards" class="cards"></div>
+            <h3 id="dealer-score"></h3>
+        </div>
+
+        <div>
+            <h2>Your Hand:</h2>
+            <div id="player-cards" class="cards"></div>
+            <h3 id="player-score"></h3>
+        </div>
+
+        <div>
+            <h2>Your Coins: <span id="coins-amount">1000</span></h2>
+            <h2>Your Bet: <span id="bet-amount">100</span></h2>
+            <button id="decrease-bet-button">Decrease Bet</button>
+            <button id="increase-bet-button">Increase Bet</button>
+        </div>
+
+        <div>
+            <button id="hit-button">Hit</button>
+            <button id="stand-button">Stand</button>
+            <button id="restart-button" class="hidden">Restart</button>
+        </div>
+
+        <h2 id="result-message"></h2>
+        
+        <!-- Leaderboard Button -->
+        <button id="leaderboard-button">Show Top 10 Users</button>
+    </div>
+
+    <!-- Leaderboard Popup -->
+    <div id="leaderboard-popup">
+        <h2>Top 10 Users</h2>
+        <ol id="leaderboard-list"></ol>
+        <button id="close-leaderboard-button">Close</button>
+    </div>
+
+    <script src="BlackjackStyling.js"></script>
+</body>
+</html>
