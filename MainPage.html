@@ -1,14 +1,55 @@
 <html>
     <link rel="stylesheet" href="mainPage-style.css">
+    <link rel="BlackjackLogic" href="BlackjackLogic.js">
+
     <title>Blackjack Project</title>
     <script src="mainPage-JS.js"></script>
    <body>
+
+    <h1>Blackjack Game with Betting and Leaderboard</h1>
+
+    <!-- Sign-Up and Login Area -->
+    <div id="login-area">
+        <div id="sign-up-section">
+            <h2>Sign Up</h2>
+            <input type="text" id="signup-username" placeholder="Enter username">
+            <button id="signup-button">Sign Up</button>
+        </div>
+
+        <div id="login-section" class="hidden">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Enter username">
+            <button id="login-button">Login</button>
+        </div>
+
+        <div id="welcome-section" class="hidden">
+            <h2 id="welcome-message"></h2>
+            <button id="logout-button">Logout</button>
+        </div>
+    </div>
+
+    <!-- Game Area (Initially Hidden) -->
+    <div id="game-area" class="hidden">
+        <div>
+            <h2>Dealer's Hand:</h2>
+            <div id="dealer-cards" class="cards"></div>
+            <h3 id="dealer-score"></h3>
+        </div>
+
+        <div>
+            <h2>Your Hand:</h2>
+            <div id="player-cards" class="cards"></div>
+            <h3 id="player-score"></h3>
+        </div>
+
+
      <div class="btn">
-       <input type="button" value="INSURANCE">
-       <input type="button" value="Spilt">
+       <input type="button" id="hit-button" value="INSURANCE">
+       <input type="button" id="stand-button" value="Spilt">
        <input type="button" value="DOUBLE">
        <input type="button" value="STAND">
        <input type="button" value="HIT">
+       <input type="button" id="restart-button" value="Restart">
      </div>
      <div class="coins">
      <input type="button" value="Get More Coins!" >
