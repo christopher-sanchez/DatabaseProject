@@ -1,12 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mainPage-style.css">
-    <link rel="BlackjackLogic" href="BlackjackLogic.js">
-
     <title>Blackjack Project</title>
-    <script src="mainPage-JS.js"></script>
-   <body>
 
-    <h1>Blackjack Game with Betting and Leaderboard</h1>
+</head>
+<body>
+
 
     <!-- Sign-Up and Login Area -->
     <div id="login-area">
@@ -30,62 +32,68 @@
 
     <!-- Game Area (Initially Hidden) -->
     <div id="game-area" class="hidden">
-        <div>
-            <h2>Dealer's Hand:</h2>
-            <div id="dealer-cards" class="cards"></div>
-            <h3 id="dealer-score"></h3>
+        <div class="container ">
+        <div class="hands-container">
+            <div>
+                <h2>Dealer's Hand:</h2>
+                <div id="dealer-cards" class="cards"></div>
+                <h3 id="dealer-score"></h3>
+            </div>
+    
+            <div>
+                <h2>Your Hand:</h2>
+                <div id="player-cards" class="cards"></div>
+                <h3 id="player-score"></h3>
+            </div>
+            <h2 id="result-message"></h2>
+            </div>  
+       
+       
+        <div class="btn">
+            <input type="button" id="hit-button" value="HIT">
+            <input type="button" id="stand-button" value="STAND">
+            <input type="button" id="double-button" value="DOUBLE DOWN"> 
+            <input type="button" id="split-button" value="SPLIT">
+            <input type="button" id="surrender-button" value="SURRENDER">
+            <input type="button" id="restart-button" value="Restart">
+        </div>
+        
+        <div class="left">
+        <div class="coins">
+            <input type="button" id="getcoins-button" value="Get More Coins!">
         </div>
 
-        <div>
-            <h2>Your Hand:</h2>
-            <div id="player-cards" class="cards"></div>
-            <h3 id="player-score"></h3>
+        <p style="font-size: larger; font-family: 'Times New Roman', Times, serif; padding-left: 5%;">Coins: <span id="coins-amount">1000</span></p>
+    
+
+    
+      
+        <h2>Your Bet: <span id="bet-amount">100</span></h2>
+            <div class="counter button">
+            <div class="counter-buttons">
+                <button id="decrease-bet-button">-</button>
+                <button id="increase-bet-button" >+</button>
+            </div>
         </div>
+    
+
+            <button id="confirm-bet-button" style="width: 250;  height: 80px" >Confirm Bet</button>
+            <button id="leaderboard-button" style="width: 250;  height: 80px" >Show Top 10 Users</button>
+         </div>
+                </div>
+                    </div>
+        </div>
+        
+    
 
 
-     <div class="btn">
-       <input type="button" id="hit-button" value="INSURANCE">
-       <input type="button" id="stand-button" value="Spilt">
-       <input type="button" value="DOUBLE">
-       <input type="button" value="STAND">
-       <input type="button" value="HIT">
-       <input type="button" id="restart-button" value="Restart">
-     </div>
-     <div class="coins">
-     <input type="button" value="Get More Coins!" >
+    <div id="leaderboard-popup" class="hidden"> 
+        <h2>Top 10 Users</h2>
+        <ol id="leaderboard-list"></ol>
+        <button id="close-leaderboard-button">Close</button>
     </div>
-      <p style="font-size: larger;font-family: 'Times New Roman', Times, serif;padding-left: 5%;" >Coins: 100000</p>
 
-    <div class="counter">
-        <div class="counter-label">
-            <p>Current bet:</p>
-        </div>
-        <input type="number"  id="Coins" name="quantity" value="1" min="1" max="100">
-     
-        <div class="counter-buttons">
-            <button onmousedown="startDecreasing()" onmouseup="stopChanging()" onmouseleave="stopChanging()">-</button>
-         <button onmousedown="startIncreasing()" onmouseup="stopChanging()" onmouseleave="stopChanging()">+</button>
-          </div>
-      </div>
-      <div class="leaderBorad table">
-        <div class="leaderBorad-label">
-            <p>Leaderborad</p>
-        </div>
-      <table >
-        <tr>
-            <th>Name</th>
-        <th>Coins</th>
-        </tr>
-        <tr>
-        <td>John Doe</td>
-        <td>30</td>
-            
-        </tr>
-        <tr>
-        <td>Jane Doe</td>
-        <td>20</td>
-    </tr>
-        </table>
-    </div>
-   </body>
+    <script src="BlackjackLogic.js"></script>
+   
+</body>
 </html>

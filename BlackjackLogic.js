@@ -27,7 +27,11 @@ const playerScoreEl = document.getElementById("player-score");
 const resultMessageEl = document.getElementById("result-message");
 const hitButton = document.getElementById("hit-button");
 const standButton = document.getElementById("stand-button");
+const doublebutton = document.getElementById("double-button")
+const splitbutton   = document.getElementById("split-button")
+const surrenderbutton = document.getElementById("surrender-button");
 const restartButton = document.getElementById("restart-button");
+const getcoinsbutton = document.getElementById("getcoins-button")
 const loginArea = document.getElementById("login-area");
 const gameArea = document.getElementById("game-area");
 
@@ -65,7 +69,11 @@ loginButton.addEventListener("click", login);
 logoutButton.addEventListener("click", logout);
 hitButton.addEventListener("click", hit);
 standButton.addEventListener("click", stand);
+doublebutton.addEventListener("click", double);
+splitbutton.addEventListener("click",split);
+surrenderbutton.addEventListener("click",surrender);
 restartButton.addEventListener("click", restartGame);
+getcoinsbutton.addEventListener("click",getcoins)
 
 function signUp() {
     const username = signupUsername.value.trim();
@@ -168,7 +176,7 @@ function startGame() {
     deck = createDeck();
     shuffleDeck(deck);
 
-    dealerHand = [drawCard(), drawCard()];
+    dealerHand = [drawCard()];
     playerHand = [drawCard(), drawCard()];
 }
 
@@ -208,6 +216,74 @@ function hit() {
         alert("Confirm your bet first!");
     }
 }
+function double(){
+    if (isGameOver) return;
+
+    if (confirmingBet === 1) {
+       
+        if (playerCoins >= currentBet) {
+            playerCoins -= currentBet; 
+            currentBet *= 2;
+
+            updateCoinsDisplay(); 
+            
+         
+            playerHand.push(drawCard());
+            updateScores();
+            renderCards();
+            if (playerScore >21){
+                endGame("you lose!",false);
+            }
+
+            
+            stand();
+        } else {
+            alert("You don't have enough coins to double down!");
+        }
+    } else {
+        alert("Please confirm your bet before doubling down!");
+    }
+
+}
+function split(){
+    if (isGameOver) return;
+
+    if (confirmingBet === 1) {
+        if (playerHand.length === 2 && playerHand[0].value === playerHand[1].value) {
+        
+            if (playerCoins >= currentBet) {
+        
+                playerCoins -= currentBet; 
+                updateCoinsDisplay(); 
+                
+              
+                const secondHand = [playerHand.pop()]; 
+                dealerHand.push(drawCard());
+                
+       
+                playerHand.push(drawCard()); 
+                secondHand.push(drawCard()); 
+
+          
+                renderCards();
+                
+             
+                playSplitHands(playerHand, secondHand);
+            } else {
+                alert("You don't have enough coins to split!");
+            }
+        } else {
+            alert("You can only split if you have two cards of the same value.");
+        }
+    } else {
+        alert("Please confirm your bet before splitting!");
+    }
+}
+function surrender(){
+   endGame("you lose!",false);
+
+}
+
 
 function stand() {
     if (isGameOver) return;
@@ -224,12 +300,12 @@ function stand() {
             endGame("You win!", true);
         } else if (playerScore < dealerScore) {
             endGame("Dealer wins!", false);
-        } else {
+        }  else {
             endGame("It's a tie!", null);
         }
     } else {
         alert("CONFIRM! BET!");
-    }
+    } 
 }
 
 function updateScores() {
@@ -269,8 +345,8 @@ function renderCards() {
     dealerHand.forEach(card => {
         let cardEl = document.createElement("div");
         cardEl.innerText = `${card.value} of ${card.suit}`;
-        dealerCardsEl.appendChild(cardEl);
-    });
+    dealerCardsEl.appendChild(cardEl);
+});
 
     playerHand.forEach(card => {
         let cardEl = document.createElement("div");
@@ -286,7 +362,7 @@ function endGame(message, playerWon) {
     standButton.disabled = true;
     restartButton.classList.remove("hidden");
 
-    // Adjust coins based on the outcome
+ 
     if (playerWon === true) {
         playerCoins += currentBet;
     } else if (playerWon === false) {
@@ -296,6 +372,8 @@ function endGame(message, playerWon) {
     updateCoinsDisplay();
     savePlayerCoins();
 }
+
+
 
 function restartGame() {
     isGameOver = false;
@@ -307,23 +385,27 @@ function restartGame() {
     decreaseBetButton.classList.remove("hidden");
     confirmBetButton.classList.remove("hidden");
 
+    
+
     dealerHand = [];
     playerHand = [];
     playerScore = 0;
     dealerScore = 0;
     confirmingBet = 0;
-
+    dealerCardsEl.innerHTML = '';
+    playerCardsEl.innerHTML = '';
+    playerScoreEl.innerText = `Your Score: ${playerScore}`;
+    dealerScoreEl.innerText = `Dealer's Score: ${dealerScore}`;
     startGame();
 }
 
-// Save player's coins to localStorage
+
 function savePlayerCoins() {
     if (currentUser) {
         localStorage.setItem(`${currentUser}-coins`, playerCoins);
     }
 }
 
-// Show top 10 users by coins
 function showLeaderboard() {
     leaderboardPopup.style.display = "block";
 
@@ -336,13 +418,52 @@ function showLeaderboard() {
         }
     }
 
-    users.sort((a, b) => b.coins - a.coins); // Sort by coins, descending
+    users.sort((a, b) => b.coins - a.coins); 
 
-    // Show top 10 users
+
     leaderboardList.innerHTML = '';
     users.slice(0, 10).forEach(user => {
         let li = document.createElement("li");
         li.innerText = `${user.username}: ${user.coins} coins`;
         leaderboardList.appendChild(li);
     });
+
+
 }
+function getcoins(){
+     
+     const coinsPerCorrectAnswer = 100;
+
+     const num1 = Math.floor(Math.random() * 20) + 1;
+     const num2 = Math.floor(Math.random() * 20) + 1;
+     const operations = ['+', '-', '*'];
+     const randomOperation = operations[Math.floor(Math.random() * operations.length)];
+ 
+     let correctAnswer;
+     switch (randomOperation) {
+         case '+':
+             correctAnswer = num1 + num2;
+             break;
+         case '-':
+             correctAnswer = num1 - num2;
+             break;
+         case '*':
+             correctAnswer = num1 * num2;
+             break;
+     }
+ 
+     
+     const playerAnswer = parseInt(prompt(`Solve: ${num1} ${randomOperation} ${num2}`), 10);
+ 
+     if (playerAnswer === correctAnswer) {
+         playerCoins += coinsPerCorrectAnswer;
+         alert(`Correct! You earned ${coinsPerCorrectAnswer} coins.`);
+     } else {
+         alert(`Incorrect. The correct answer was ${correctAnswer}. Try again!`);
+     }
+ 
+    
+     updateCoinsDisplay();
+ }
+
+
